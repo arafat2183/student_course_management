@@ -91,7 +91,7 @@
 </div>
 
 </div>
-<button type="submit" class="btn btn-success float-left ml-2">Update</button>
+    <button type="submit" class="btn btn-success float-left ml-2 mt-2 mb-2">Update</button>
 </form>
 
                 </div>
@@ -140,7 +140,7 @@
 </div>
 
 </div>
-<button type="submit" class="btn btn-primary float-left ml-2">Save</button>
+<button type="submit" class="btn btn-primary float-left ml-2 mt-2">Save</button>
 </form>
                 </div>
             </div>
