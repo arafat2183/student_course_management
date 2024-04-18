@@ -95,7 +95,7 @@
 </form>
 
                 </div>
-                
+
                 <!-- There is no current student to be edited -->
 
                 <div>
@@ -147,6 +147,37 @@
 
     </div>
 </template>
+
+<script>
+
+    export default{
+      data(){
+        return{
+          'api' : 'http://127.0.0.1:8000/api/',
+          'student' : {
+            'name' : '',
+            'course' : '',
+            'email' : '',
+            'gender' : '',
+          }
+        }
+      },
+
+      mounted() {
+        console.log('DOM rendered');
+      },
+
+      created() {
+        console.log('DOM created');
+      },
+
+      methods: {
+        getStudents(){
+          console.log('Student List')
+        }
+      },
+    }
+</script>
 
 <style>
 @media (min-width: 1024px) {
