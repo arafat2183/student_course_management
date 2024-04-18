@@ -95,10 +95,7 @@
 </form>
 
                 </div>
-
-
-
-
+                
                 <!-- There is no current student to be edited -->
 
                 <div>
