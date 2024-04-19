@@ -32,7 +32,7 @@
       <td>{{ student.gender }}</td>
       <td>
         <a href="#" class="edit" title="" ><button class="btn btn-warning btn-sm" @click="editButton(student.id)">Edit</button></a>
-        <a href="#" class="edit ml-1" title="" ><button  class="btn btn-danger btn-sm">Delete</button></a>
+        <a href="#" class="edit ml-1" title="" ><button  class="btn btn-danger btn-sm" @click="deleteStudent(student.id)">Delete</button></a>
 
 
       </td>
@@ -219,6 +219,18 @@
 
         updateStudent(id){
           axios.put(this.api + `/students/${id}/`, this.currentStudent).then(
+            response =>{
+              console.log(response.data)
+              this.getStudents()
+              this.currentStudent = {}
+            }
+          ).catch(error =>{
+            console.log(error)
+          })
+        },
+
+        deleteStudent(id){
+          axios.delete(this.api + `/students/${id}/`, id).then(
             response =>{
               console.log(response.data)
               this.getStudents()
