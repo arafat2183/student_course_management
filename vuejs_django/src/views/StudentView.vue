@@ -49,7 +49,7 @@
 
                   <!-- There is a current student to be edited -->
 
-                <div >
+                <div v-if="Object.keys(this.currentStudent).length !== 0">
                 
 
                     <h2 class="alert alert-warning">Edit Student Details</h2>
@@ -98,23 +98,23 @@
 
                 <!-- There is no current student to be edited -->
 
-                <div>
+                <div v-else>
                     <h2 class="alert alert-info">Create A New Student</h2>
-                    <form>
+                    <form @submit.prevent="saveStudent()">
 
 <div class="row">
 
     <div class="col">
         <div class="form-group">
 <label class="form-label float-left ml-2">Name</label>
-<input type="text" class="form-control">
+<input type="text" class="form-control" v-model="student.name">
 </div>
     </div>
 
     <div class="col">
         <div class="form-group">
 <label class="form-label float-left ml-2">Email</label>
-<input type="email" class="form-control">
+<input type="email" class="form-control" v-model="student.email">
 </div>
     </div>
 </div>
@@ -125,14 +125,14 @@
 <div class="col">
 <div class="form-group">
 <label class="form-label float-left ml-2">Course</label>
-<input type="text" class="form-control">
+<input type="text" class="form-control" v-model="student.course">
 </div>
 </div>
 <div class="col">
 
 <div class="form-group">
 <label class="form-label float-left ml-2">Gender</label>
-<input type="text" class="form-control">
+<input type="text" class="form-control" v-model="student.gender">
 </div>
 </div>
 
@@ -156,6 +156,7 @@
       data(){
         return{
           students: [],
+          currentStudent: {},
           'api' : 'http://127.0.0.1:8000/api',
           'student' : {
             'name' : '',
@@ -177,7 +178,7 @@
 
       methods: {
         getStudents(){
-          axios.get(this.api + '/students/', this.student).then(
+          axios.get(this.api + '/students/').then(
             response =>{
               console.log(response.data)
               this.students = response.data;
@@ -185,7 +186,19 @@
           ).catch(error =>{
             console.log(error)
           })
-        }
+        },
+
+        saveStudent(){
+          axios.post(this.api + '/students/', this.student).then(
+            response =>{
+              console.log(response.data)
+              this.getStudents()
+              this.student = {}
+            }
+          ).catch(error =>{
+            console.log(error)
+          })
+        },
       },
     }
 </script>
