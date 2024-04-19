@@ -31,7 +31,7 @@
       <td>{{ student.email }}</td>
       <td>{{ student.gender }}</td>
       <td>
-        <a href="#" class="edit" title="" ><button class="btn btn-warning btn-sm">Edit</button></a>
+        <a href="#" class="edit" title="" ><button class="btn btn-warning btn-sm" @click="editButton(student.id)">Edit</button></a>
         <a href="#" class="edit ml-1" title="" ><button  class="btn btn-danger btn-sm">Delete</button></a>
 
 
@@ -54,21 +54,21 @@
 
                     <h2 class="alert alert-warning">Edit Student Details</h2>
 
-                    <form>
+                    <form @submit.prevent="updateStudent(currentStudent.id)">
 
 <div class="row">
 
     <div class="col">
         <div class="form-group">
 <label class="form-label float-left ml-2">Name</label>
-<input type="text" class="form-control">
+<input type="text" class="form-control" v-model="currentStudent.name">
 </div>
     </div>
 
     <div class="col">
         <div class="form-group">
 <label class="form-label float-left ml-2">Email</label>
-<input type="email" class="form-control">
+<input type="email" class="form-control" v-model="currentStudent.email">
 </div>
     </div>
 </div>
@@ -79,19 +79,19 @@
 <div class="col">
 <div class="form-group">
 <label class="form-label float-left ml-2">Course</label>
-<input type="text" class="form-control">
+<input type="text" class="form-control" v-model="currentStudent.course">
 </div>
 </div>
 <div class="col">
 
 <div class="form-group">
 <label class="form-label float-left ml-2">Gender</label>
-<input type="text" class="form-control">
+<input type="text" class="form-control" v-model="currentStudent.gender">
 </div>
 </div>
 
 </div>
-    <button type="submit" class="btn btn-success float-left ml-2 mt-2 mb-2">Update</button>
+    <button type="submit" class="btn btn-success float-left ml-2 mt-2 mb-2" >Update</button>
 </form>
 
                 </div>
@@ -194,6 +194,35 @@
               console.log(response.data)
               this.getStudents()
               this.student = {}
+            }
+          ).catch(error =>{
+            console.log(error)
+          })
+        },
+
+        editButton(id){
+          console.log(id)
+          this.students.map(student => {
+            if (student.id === id) {
+              console.log(student.name)
+              this.currentStudent = {
+                'id' : student.id,
+                'name' : student.name,
+                'course' : student.course,
+                'email' : student.email,
+                'gender' : student.gender,
+
+              }
+            }
+          })
+        },
+
+        updateStudent(id){
+          axios.put(this.api + `/students/${id}/`, this.currentStudent).then(
+            response =>{
+              console.log(response.data)
+              this.getStudents()
+              this.currentStudent = {}
             }
           ).catch(error =>{
             console.log(error)
