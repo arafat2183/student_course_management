@@ -25,11 +25,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+    <tr v-for="student in students">
+      <td>{{ student.name }}</td>
+      <td>{{ student.course }}</td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.gender }}</td>
       <td>
         <a href="#" class="edit" title="" ><button class="btn btn-warning btn-sm">Edit</button></a>
         <a href="#" class="edit ml-1" title="" ><button  class="btn btn-danger btn-sm">Delete</button></a>
@@ -150,10 +150,13 @@
 
 <script>
 
+  import axios from 'axios';
+
     export default{
       data(){
         return{
-          'api' : 'http://127.0.0.1:8000/api/',
+          students: [],
+          'api' : 'http://127.0.0.1:8000/api',
           'student' : {
             'name' : '',
             'course' : '',
@@ -169,11 +172,19 @@
 
       created() {
         console.log('DOM created');
+        this.getStudents();
       },
 
       methods: {
         getStudents(){
-          console.log('Student List')
+          axios.get(this.api + '/students/', this.student).then(
+            response =>{
+              console.log(response.data)
+              this.students = response.data;
+            }
+          ).catch(error =>{
+            console.log(error)
+          })
         }
       },
     }
